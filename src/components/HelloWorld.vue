@@ -1,15 +1,15 @@
 <script setup lang="ts">
-  import { ref } from 'vue'
+  import { ref } from 'vue';
 
   type Props = {
     message: string;
-  }
+  };
 
-  defineProps<Props>()
+  defineProps<Props>();
 
-  const count = ref(0)
+  const count = ref(0);
 </script>
 
 <template>
-  <div class="font-bold underline text-pink">{{ message }}</div>
+  <div class="font-bold text-blue underline">{{ message }} - {{ count }}</div>
 </template>
