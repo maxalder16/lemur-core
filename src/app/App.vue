@@ -3,8 +3,8 @@
 </script>
 
 <template>
+  <Header />
   <div class="p-10">
-    <Header />
     <RouterView />
   </div>
 </template>
