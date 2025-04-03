@@ -1,5 +1,5 @@
 import HomeView from './Index.vue';
-import LoginView from './Login.vue';
+import ToolsView from './Tools.vue';
 
 const routes = [
   {
@@ -8,9 +8,9 @@ const routes = [
     component: HomeView,
   },
   {
-    path: '/user/login',
-    name: 'UserLogin',
-    component: LoginView,
+    path: '/tools',
+    name: 'Tools',
+    component: ToolsView,
   },
 ];
 
