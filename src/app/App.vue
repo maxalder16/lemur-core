@@ -1,5 +1,10 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+  import { Header } from '../widgets/navigation';
+</script>
 
 <template>
-  <div>test</div>
+  <div class="p-10">
+    <Header />
+    <RouterView />
+  </div>
 </template>
