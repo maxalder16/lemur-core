@@ -11,5 +11,5 @@
 </script>
 
 <template>
-  <h1 class="font-bold">{{ message }}</h1>
+  <div class="font-bold underline text-pink">{{ message }}</div>
 </template>
