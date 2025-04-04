@@ -42,7 +42,7 @@
       v-if="isAuthenticated && user?.picture"
       :to="{ name: 'UserProfile' }"
     >
-      <img :src="user.picture" class="mr-4 size-[50px] rounded-full" />
+      <UIButton theme="primary"> Profile </UIButton>
     </RouterLink>
     <UIButton theme="primary" @click="handleLogout()" v-if="isAuthenticated">
       Log out
