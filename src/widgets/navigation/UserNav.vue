@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { useAuth0 } from '@auth0/auth0-vue';
-  import { UIButton } from '~/shared/ui';
+  import { UIButton } from '../../shared/ui';
 
   const { loginWithRedirect, logout, isAuthenticated, user } = useAuth0();
 

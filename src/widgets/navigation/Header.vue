@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { useAdminStore } from '~/entities/admin/model';
+  import { useAdminStore } from '../../entities/admin/model';
   import UserNav from './UserNav.vue';
   import { storeToRefs } from 'pinia';
 

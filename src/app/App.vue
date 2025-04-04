@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { Header } from '~/widgets/navigation';
+  import { Header } from '../widgets/navigation';
 </script>
 
 <template>
