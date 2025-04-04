@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
     "preview": "vite preview",
-    "build:pages": "pnpm build && git add dist -f && git commit -m 'updating dist' && git subtree push --prefix dist origin gh-pages"
+    "build:pages": "pnpm build && git add dist -f && git commit -m 'updating dist' && git subtree push --prefix dist origin gh-pages",
+    "deploy:pages": "read -p 'Are you sure you want to deploy to GitHub Pages? (y/n) ' confirm && if [ \"$confirm\" == \"y\" ]; then pnpm build:pages; else echo 'Deployment cancelled.'; fi"
   },
   "dependencies": {
     "@auth0/auth0-vue": "^2.4.0",
