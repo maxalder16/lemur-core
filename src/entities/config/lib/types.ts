@@ -2,5 +2,10 @@ export type ContentRow = {
   id: string;
   created_at: string;
   page: string;
-  content: string;
+  content: any;
+};
+
+export type HomepageContent = {
+  title: string;
+  subtitle: string;
 };

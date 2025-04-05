@@ -21,8 +21,17 @@ export default defineStore('Config', () => {
     config.value = data as ContentRow[];
   }
 
+  function getPageConfig(page: string) {
+    const fetchPage = config.value.find(item => item.page === page);
+
+    if (fetchPage?.content) {
+      return fetchPage.content;
+    }
+  }
+
   return {
     initContent,
+    getPageConfig,
     config,
   };
 });
