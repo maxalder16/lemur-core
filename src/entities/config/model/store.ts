@@ -1,4 +1,4 @@
-import { createClient } from '@supabase/supabase-js';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import type { ContentRow } from '../lib';
@@ -6,18 +6,20 @@ import type { ContentRow } from '../lib';
 export default defineStore('Config', () => {
   const config = ref<ContentRow[]>([]);
 
+  const supabaseInst = ref<SupabaseClient<any, 'public', any>>();
+
   async function initSupabase() {
     const supabaseUrl = 'https://knlboedsxlwmmddmjwig.supabase.co';
     const supabaseKey = import.meta.env.VITE_SUPABASE_KEY;
 
-    const supabase = createClient(supabaseUrl, supabaseKey);
-    return supabase;
+    supabaseInst.value = createClient(supabaseUrl, supabaseKey);
   }
 
   async function initContent() {
-    const supabase = await initSupabase();
+    initSupabase();
+    if (!supabaseInst.value) return;
 
-    const { data } = await supabase.from('Content').select('*');
+    const { data } = await supabaseInst.value.from('Content').select('*');
     config.value = data as ContentRow[];
   }
 
@@ -36,7 +38,19 @@ export default defineStore('Config', () => {
     }, {});
   }
 
+  async function getSupabaseUser() {
+    if (!supabaseInst.value) return;
+
+    const {
+      data: { user },
+    } = await supabaseInst.value.auth.getUser();
+
+    return user;
+  }
+
   return {
+    supabaseInst,
+    getSupabaseUser,
     initContent,
     getPageConfig,
     formatFields,
