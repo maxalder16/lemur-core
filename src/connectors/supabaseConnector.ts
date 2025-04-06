@@ -45,6 +45,12 @@ class SupabaseConnector {
       return user;
     }
   }
+
+  public async signOut() {
+    if (this.supabaseInstance) {
+      await this.supabaseInstance.auth.signOut();
+    }
+  }
 }
 
 export const supabaseConnector = new SupabaseConnector(

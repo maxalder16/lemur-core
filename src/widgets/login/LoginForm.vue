@@ -4,12 +4,16 @@
   import { UIButton, UIInput } from '../../shared/ui';
   import { isValidEmail } from '../../shared/helpers';
   import { useRouter } from 'vue-router';
+  import { useUserStore } from '../../entities/user';
 
   type Props = {
     register?: boolean;
   };
 
   const props = defineProps<Props>();
+
+  const userStore = useUserStore();
+  const { fetchUser } = userStore;
 
   const router = useRouter();
 
@@ -42,16 +46,18 @@
           emailAddress.value,
           password.value
         );
-
-        // if no errors, signed up, so redirect home
-        if (!formErrorMessage.value) {
-          router.push({ name: 'Home' });
-        }
       } else {
+        // log in using the form fields
         formErrorMessage.value = await supabaseConnector.signIn(
           emailAddress.value,
           password.value
         );
+      }
+
+      // if no errors, update user, redirect home
+      if (!formErrorMessage.value) {
+        await fetchUser();
+        router.push({ name: 'Home' });
       }
     } else {
       checkErrors.value = true;
