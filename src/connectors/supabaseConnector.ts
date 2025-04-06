@@ -51,6 +51,11 @@ class SupabaseConnector {
       await this.supabaseInstance.auth.signOut();
     }
   }
+  public async resetPassword(email: string) {
+    if (this.supabaseInstance) {
+      await this.supabaseInstance.auth.resetPasswordForEmail(email);
+    }
+  }
 }
 
 export const supabaseConnector = new SupabaseConnector(

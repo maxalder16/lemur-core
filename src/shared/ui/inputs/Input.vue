@@ -8,6 +8,7 @@
     placeholder?: string;
     error?: boolean;
     errorMessage?: string;
+    password?: boolean;
   };
 
   const props = defineProps<Props>();
@@ -29,6 +30,7 @@
         {{ label }}
       </div>
       <input
+        :type="password ? 'password' : 'text'"
         class="w-full outline-none"
         :placeholder="placeholder"
         v-model="inputValue"
