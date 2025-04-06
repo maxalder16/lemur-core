@@ -1,17 +1,22 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import type { ContentRow } from '../lib';
+import type { ContentRow, MessageRow } from '../lib';
 import { supabaseConnector } from '../../../connectors/supabaseConnector';
+import type { AuthError } from '@supabase/supabase-js';
 
 export default defineStore('Config', () => {
   const config = ref<ContentRow[]>([]);
+  const messages = ref<MessageRow[]>([]);
 
   async function initContent() {
     const supabase = supabaseConnector.getInstance();
     if (!supabase) return;
 
-    const { data } = await supabase.from('Content').select('*');
-    config.value = data as ContentRow[];
+    const { data: contentData } = await supabase.from('Content').select('*');
+    config.value = contentData as ContentRow[];
+
+    const { data: messageData } = await supabase.from('Messages').select('*');
+    messages.value = messageData as MessageRow[];
   }
 
   function getPageConfig(page: string) {
@@ -29,10 +34,23 @@ export default defineStore('Config', () => {
     }, {});
   }
 
+  function getMessage(code: string) {
+    return messages.value.find(item => item.code === code);
+  }
+
+  function getMessageFromAuth(error: AuthError) {
+    return (
+      messages.value.find(item => item.code === error.code)?.value ??
+      error.message
+    );
+  }
+
   return {
     initContent,
     getPageConfig,
     formatFields,
+    getMessage,
+    getMessageFromAuth,
     config,
   };
 });

@@ -5,3 +5,10 @@ export type ContentRow = {
   name: string;
   value: string;
 };
+
+export type MessageRow = {
+  id: string;
+  created_at: string;
+  code: string;
+  value: string;
+};

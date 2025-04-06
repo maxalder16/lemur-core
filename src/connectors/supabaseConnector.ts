@@ -22,7 +22,7 @@ class SupabaseConnector {
         password: password,
       });
 
-      return error?.message;
+      return error;
     }
   }
 
@@ -33,7 +33,7 @@ class SupabaseConnector {
         password: password,
       });
 
-      return error?.message;
+      return error;
     }
   }
 

@@ -5,6 +5,8 @@
   import { isValidEmail } from '../../shared/helpers';
   import { useRouter } from 'vue-router';
   import { useUserStore } from '../../entities/user';
+  import { AuthError } from '@supabase/supabase-js';
+  import { useConfigStore } from '../../entities/config/model';
 
   type Props = {
     register?: boolean;
@@ -14,6 +16,9 @@
 
   const userStore = useUserStore();
   const { fetchUser } = userStore;
+
+  const configStore = useConfigStore();
+  const { getMessageFromAuth } = configStore;
 
   const router = useRouter();
 
@@ -36,7 +41,7 @@
   const checkErrors = ref(false);
 
   // for storing response from supabase
-  const formErrorMessage = ref();
+  const formErrorMessage = ref<AuthError | null>();
 
   async function submit() {
     if (formValid.value) {
@@ -80,7 +85,7 @@
       :error-message="passwordError"
     />
     <div v-if="formErrorMessage" class="text-sm text-red-500">
-      {{ formErrorMessage }}
+      {{ getMessageFromAuth(formErrorMessage) }}
     </div>
     <UIButton theme="primary" @click="submit">
       {{ register ? 'Sign up' : 'Sign in' }}
