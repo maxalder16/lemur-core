@@ -19,10 +19,12 @@
 </script>
 
 <template>
-  <div
-    class="cursor-pointer rounded-sm px-3.5 py-2.5 font-bold transition-all"
-    :class="theme"
-  >
-    <slot />
+  <div>
+    <div
+      class="inline-flex cursor-pointer rounded-sm px-3.5 py-2.5 font-bold transition-all"
+      :class="theme"
+    >
+      <slot />
+    </div>
   </div>
 </template>

@@ -74,6 +74,12 @@
   --color-secondary-100: #a3fef5;
   --color-secondary-50: #b7fef7;
   --color-secondary-10: #cafef9;
+
+  --color-black: #000;
+  --color-black-300: #333;
+  --color-black-200: #474747;
+  --color-black-100: #5c5c5c;
+  --color-black-50: #707070;
 }
 
 :root {
