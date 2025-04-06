@@ -22,16 +22,24 @@ export default defineStore('Config', () => {
   }
 
   function getPageConfig(page: string) {
-    const fetchPage = config.value.find(item => item.page === page);
+    const contentFields = config.value.filter(
+      item => item.page === page
+    ) as ContentRow[];
 
-    if (fetchPage?.content) {
-      return fetchPage.content;
-    }
+    return contentFields ?? [];
+  }
+
+  function formatFields(rows: ContentRow[]) {
+    return rows.reduce<{ [key: string]: string }>((acc, { name, value }) => {
+      acc[name] = value;
+      return acc;
+    }, {});
   }
 
   return {
     initContent,
     getPageConfig,
+    formatFields,
     config,
   };
 });

@@ -1,16 +1,16 @@
 <script setup lang="ts">
-  import type { HomepageContent } from '../entities/config/lib';
   import { useConfigStore } from '../entities/config/model';
   import { computed } from 'vue';
 
   const configStore = useConfigStore();
-  const { getPageConfig } = configStore;
+  const { getPageConfig, formatFields } = configStore;
 
-  const pageContent = computed(() => getPageConfig('home') as HomepageContent);
+  const pageFields = computed(() => getPageConfig('home'));
+  const fields = computed(() => formatFields(pageFields.value));
 </script>
 
 <template>
   <div class="text-[50px] font-bold">Homepage</div>
-  <div>{{ pageContent.title }}</div>
-  <div>{{ pageContent.subtitle }}</div>
+  <div>{{ fields['title'] }}</div>
+  <div>{{ fields['subtitle'] }}</div>
 </template>
