@@ -1,10 +1,4 @@
-import {
-  AuthError,
-  createClient,
-  SupabaseClient,
-  type Session,
-  type User,
-} from '@supabase/supabase-js';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
 class SupabaseConnector {
   private supabaseInstance: SupabaseClient<any, 'public', any> | null = null;
@@ -40,6 +34,15 @@ class SupabaseConnector {
       });
 
       return error?.message;
+    }
+  }
+
+  public async getUser() {
+    if (this.supabaseInstance) {
+      const {
+        data: { user },
+      } = await this.supabaseInstance.auth.getUser();
+      return user;
     }
   }
 }

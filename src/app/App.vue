@@ -4,15 +4,20 @@
 
   import { useConfigStore } from '../entities/config/model';
   import { supabaseConnector } from '../connectors/supabaseConnector';
+  import { useUserStore } from '../entities/user';
 
   const configStore = useConfigStore();
   const { initContent } = configStore;
+
+  const userStore = useUserStore();
+  const { fetchUser } = userStore;
 
   const configLoading = ref(true);
 
   onMounted(async () => {
     supabaseConnector.getInstance();
     await initContent();
+    await fetchUser();
     configLoading.value = false;
   });
 
