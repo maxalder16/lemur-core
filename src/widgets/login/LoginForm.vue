@@ -97,7 +97,7 @@
 
 <template>
   <div
-    class="grid gap-3 pt-20"
+    class="grid gap-3"
     :class="formLoading ? 'pointer-events-none opacity-40' : ''"
   >
     <UIInput
