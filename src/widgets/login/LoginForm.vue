@@ -44,9 +44,12 @@
   const formErrorMessage = ref<AuthError | null>();
 
   const signUpComplete = ref(false);
+  const formLoading = ref(false);
 
   async function submit() {
     if (formValid.value) {
+      formLoading.value = true;
+
       if (props.register) {
         // register using the form fields
         formErrorMessage.value = await supabaseConnector.signUp(
@@ -55,7 +58,9 @@
         );
 
         // show email verification message
-        signUpComplete.value = true;
+        if (!formErrorMessage.value) {
+          signUpComplete.value = true;
+        }
       } else {
         // log in using the form fields
         formErrorMessage.value = await supabaseConnector.signIn(
@@ -69,6 +74,8 @@
           router.push({ name: 'Home' });
         }
       }
+
+      formLoading.value = false;
     } else {
       checkErrors.value = true;
     }
@@ -76,7 +83,10 @@
 </script>
 
 <template>
-  <div class="grid gap-3 pt-20">
+  <div
+    class="grid gap-3 pt-20"
+    :class="formLoading ? 'pointer-events-none opacity-40' : ''"
+  >
     <UIInput
       v-model="emailAddress"
       label="Email address"
@@ -92,7 +102,7 @@
     <div v-if="formErrorMessage" class="text-sm text-red-500">
       {{ getMessageFromAuth(formErrorMessage) }}
     </div>
-    <div v-if="signUpComplete" class="text-sm">
+    <div v-else-if="signUpComplete" class="text-sm">
       Thank you for registering, please validate your email address to log in.
     </div>
     <UIButton theme="primary" @click="submit">
