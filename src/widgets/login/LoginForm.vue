@@ -43,6 +43,8 @@
   // for storing response from supabase
   const formErrorMessage = ref<AuthError | null>();
 
+  const signUpComplete = ref(false);
+
   async function submit() {
     if (formValid.value) {
       if (props.register) {
@@ -51,18 +53,21 @@
           emailAddress.value,
           password.value
         );
+
+        // show email verification message
+        signUpComplete.value = true;
       } else {
         // log in using the form fields
         formErrorMessage.value = await supabaseConnector.signIn(
           emailAddress.value,
           password.value
         );
-      }
 
-      // if no errors, update user, redirect home
-      if (!formErrorMessage.value) {
-        await fetchUser();
-        router.push({ name: 'Home' });
+        // if no errors, update user, redirect home
+        if (!formErrorMessage.value) {
+          await fetchUser();
+          router.push({ name: 'Home' });
+        }
       }
     } else {
       checkErrors.value = true;
@@ -86,6 +91,9 @@
     />
     <div v-if="formErrorMessage" class="text-sm text-red-500">
       {{ getMessageFromAuth(formErrorMessage) }}
+    </div>
+    <div v-if="signUpComplete" class="text-sm">
+      Thank you for registering, please validate your email address to log in.
     </div>
     <UIButton theme="primary" @click="submit">
       {{ register ? 'Sign up' : 'Sign in' }}
