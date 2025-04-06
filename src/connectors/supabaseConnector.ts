@@ -1,4 +1,10 @@
-import { createClient, SupabaseClient } from '@supabase/supabase-js';
+import {
+  AuthError,
+  createClient,
+  SupabaseClient,
+  type Session,
+  type User,
+} from '@supabase/supabase-js';
 
 class SupabaseConnector {
   private supabaseInstance: SupabaseClient<any, 'public', any> | null = null;
@@ -16,11 +22,24 @@ class SupabaseConnector {
   }
 
   public async signUp(username: string, password: string) {
-    if (username.length > 0 && password.length > 0 && this.supabaseInstance) {
-      await this.supabaseInstance.auth.signUp({
+    if (username && password && this.supabaseInstance) {
+      const { error } = await this.supabaseInstance.auth.signUp({
         email: username,
         password: password,
       });
+
+      return error?.message;
+    }
+  }
+
+  public async signIn(username: string, password: string) {
+    if (username.length > 0 && password.length > 0 && this.supabaseInstance) {
+      const { error } = await this.supabaseInstance.auth.signInWithPassword({
+        email: username,
+        password: password,
+      });
+
+      return error?.message;
     }
   }
 }
