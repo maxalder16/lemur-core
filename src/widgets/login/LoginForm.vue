@@ -60,6 +60,8 @@
         // show email verification message
         if (!formErrorMessage.value) {
           signUpComplete.value = true;
+          emailAddress.value = '';
+          password.value = '';
         }
       } else {
         // log in using the form fields

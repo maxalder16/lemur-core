@@ -5,6 +5,9 @@
   import { useConfigStore } from '../entities/config/model';
   import { supabaseConnector } from '../connectors/supabaseConnector';
   import { useUserStore } from '../entities/user';
+  import { useRouter } from 'vue-router';
+
+  const router = useRouter();
 
   const configStore = useConfigStore();
   const { initContent } = configStore;
@@ -19,6 +22,10 @@
     await initContent();
     await fetchUser();
     configLoading.value = false;
+  });
+
+  router.beforeEach(to => {
+    if (!to.name) router.push({ name: 'Home' });
   });
 
   const loading = computed(() => configLoading.value);
