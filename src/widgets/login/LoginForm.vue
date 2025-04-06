@@ -82,17 +82,6 @@
       checkErrors.value = true;
     }
   }
-
-  const passwordEmailSent = ref(false);
-
-  async function resetPassword() {
-    if (emailValid.value) {
-      formLoading.value = true;
-      await supabaseConnector.resetPassword(emailAddress.value);
-      passwordEmailSent.value = true;
-      formLoading.value = false;
-    }
-  }
 </script>
 
 <template>
@@ -122,15 +111,12 @@
     <UIButton theme="primary" @click="submit">
       {{ register ? 'Sign up' : 'Sign in' }}
     </UIButton>
-    <div
+    <RouterLink
+      :to="{ name: 'UserPassword' }"
       v-if="!register"
       class="cursor-pointer text-xs hover:underline"
-      @click="resetPassword"
     >
       Forgotten password?
-    </div>
-    <div v-if="passwordEmailSent" class="text-sm">
-      Please check your email for next steps on how to reset your password.
-    </div>
+    </RouterLink>
   </div>
 </template>
