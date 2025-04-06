@@ -3,6 +3,7 @@
   import { Header } from '../widgets/navigation';
 
   import { useConfigStore } from '../entities/config/model';
+  import { supabaseConnector } from '../connectors/supabaseConnector';
 
   const configStore = useConfigStore();
   const { initContent } = configStore;
@@ -10,6 +11,7 @@
   const configLoading = ref(true);
 
   onMounted(async () => {
+    supabaseConnector.getInstance();
     await initContent();
     configLoading.value = false;
   });
